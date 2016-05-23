@@ -2,7 +2,7 @@
 
 Minimal library for encoding audio streams into ogg vorbis files.
 
-- [Documentation](https://bonsaiden.github.io/vorbis-enc/doc/vorbis-enc)
+- [Documentation](https://bonsaiden.github.io/vorbis-enc/doc/vorbis_enc)
 
 
 ## License
