@@ -1,0 +1,16 @@
+[package]
+name = "vorbis-enc"
+version = "0.1.0"
+authors = ["Ivo Wetzel <ivo.wetzel@googlemail.com>"]
+
+[dependencies]
+vorbisenc-sys = "0.0.1"
+vorbisfile-sys = "0.0.8"
+vorbis-sys = "0.0.8"
+ogg-sys = "0.0.9"
+rand = "0.3.14"
+clippy = { version = "*", optional = true }
+
+[features]
+lint = ["clippy"]
+
