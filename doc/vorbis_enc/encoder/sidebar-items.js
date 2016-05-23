@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["OggVorbisEncoder","Implementation of a file based ogg-vorbis audio encoder."]]});
