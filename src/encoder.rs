@@ -17,6 +17,7 @@ use std::ffi::CString;
 
 
 // External Dependencies ------------------------------------------------------
+use libc;
 use rand;
 use rand::Rng;
 
@@ -119,10 +120,10 @@ impl OggVorbisEncoder {
 
                 self.vorbis.init(
                     channels,
-                    sample_rate as i64,
-                    max_bitrate.map_or(-1, |b| b as i64),
-                    nominal_bitrate as i64,
-                    min_bitrate.map_or(-1, |b| b as i64)
+                    sample_rate,
+                    max_bitrate.map_or(-1, |b| b as i32),
+                    nominal_bitrate as i32,
+                    min_bitrate.map_or(-1, |b| b as i32)
                 );
                 self.ogg.init(&mut self.vorbis);
                 self.ogg.write_flush(&mut self.file);
@@ -152,7 +153,7 @@ impl OggVorbisEncoder {
         match self.state {
             EncoderState::Created => {
 
-                self.vorbis.init_vbr(channels, sample_rate as i64, quality);
+                self.vorbis.init_vbr(channels, sample_rate, quality);
                 self.ogg.init(&mut self.vorbis);
                 self.file_size += self.ogg.write_flush(&mut self.file);
 
@@ -242,18 +243,30 @@ impl VorbisState {
         }
     }
 
-    fn init(&mut self, channels: usize, sample_rate: i64, max_bitrate: i64, nominal_bitrate: i64, min_bitrate: i64) {
+    fn init(&mut self, channels: usize, sample_rate: u32, max_bitrate: i32, nominal_bitrate: i32, min_bitrate: i32) {
         self.pre_init(channels);
         unsafe {
-            vorbis_encode_init(&mut self.vi, channels as i64, sample_rate, max_bitrate, nominal_bitrate, min_bitrate);
+            vorbis_encode_init(
+                &mut self.vi,
+                channels as libc::c_long,
+                sample_rate as libc::c_long,
+                max_bitrate as libc::c_long,
+                nominal_bitrate as libc::c_long,
+                min_bitrate as libc::c_long
+            );
         }
         self.post_init();
     }
 
-    fn init_vbr(&mut self, channels: usize, sample_rate: i64, quality: f32) {
+    fn init_vbr(&mut self, channels: usize, sample_rate: u32, quality: f32) {
         self.pre_init(channels);
         unsafe {
-            vorbis_encode_init_vbr(&mut self.vi, channels as i64, sample_rate, quality);
+            vorbis_encode_init_vbr(
+                &mut self.vi,
+                channels as libc::c_long,
+                sample_rate as libc::c_long,
+                quality as libc::c_float
+            );
         }
         self.post_init();
     }

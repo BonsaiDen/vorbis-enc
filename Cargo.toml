@@ -9,6 +9,7 @@ vorbisfile-sys = "0.0.8"
 vorbis-sys = "0.0.8"
 ogg-sys = "0.0.9"
 rand = "0.3.14"
+libc = "0.2.7"
 clippy = { version = "*", optional = true }
 
 [features]

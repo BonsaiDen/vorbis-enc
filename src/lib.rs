@@ -12,6 +12,7 @@ extern crate vorbisfile_sys;
 extern crate vorbisenc_sys;
 extern crate ogg_sys;
 extern crate rand;
+extern crate libc;
 
 
 // Exports --------------------------------------------------------------------
